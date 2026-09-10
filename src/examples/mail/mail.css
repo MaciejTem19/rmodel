@@ -1,0 +1,196 @@
+.mail {
+  --line: color-mix(in srgb, currentColor 22%, transparent);
+  --soft: color-mix(in srgb, currentColor 7%, transparent);
+
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mail-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mail-title {
+  margin: 0;
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+}
+
+.mail-body {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.mail-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.folder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.folder:hover {
+  background: var(--soft);
+}
+
+.folder-on {
+  border-color: var(--line);
+  background: var(--soft);
+  font-weight: 600;
+}
+
+.badge {
+  font-size: 0.75rem;
+  opacity: 0.55;
+}
+
+.mail-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.threads {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.thread {
+  display: grid;
+  grid-template-columns: auto 8rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.thread:hover {
+  background: var(--soft);
+}
+
+.thread-on {
+  background: var(--soft);
+  border-color: currentColor;
+}
+
+.thread-unread .thread-subject {
+  font-weight: 700;
+}
+
+.thread-from {
+  font-size: 0.85rem;
+  opacity: 0.75;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.thread-subject {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.thread-preview {
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+.thread-at {
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+.star {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+  color: inherit;
+}
+
+.reader {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.reader-subject {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.reader-body {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.composer {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.composer-body {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.5rem;
+  min-height: 4.5rem;
+  resize: vertical;
+}
+
+.statusbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  min-height: 1.4rem;
+}
+
+.hint {
+  font-size: 0.8rem;
+  opacity: 0.55;
+  margin: 0;
+}

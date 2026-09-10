@@ -1,0 +1,65 @@
+{
+  "name": "rmodel",
+  "version": "0.1.0",
+  "description": "A lightweight state management library for React, built around the state of a single page — a ViewModel for the page.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "keywords": [
+    "react",
+    "state-management",
+    "store",
+    "viewmodel",
+    "hooks",
+    "typescript"
+  ],
+  "main": "./dist/rmodel.cjs",
+  "module": "./dist/rmodel.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/main.d.ts",
+        "default": "./dist/rmodel.js"
+      },
+      "require": {
+        "types": "./dist/cjs/main.d.ts",
+        "default": "./dist/rmodel.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "lib",
+    "README.md",
+    "docs.md",
+    "api.md"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:lib",
+    "build:lib": "vite build --config vite.lib.config.ts && npm run build:types",
+    "build:types": "tsc -p tsconfig.lib.json && tsc -p tsconfig.lib.cjs.json && node scripts/cjs-types-marker.mjs",
+    "build:demo": "tsc -b && vite build",
+    "typecheck": "tsc -b && tsc -p tsconfig.lib.json --noEmit",
+    "preview": "vite preview",
+    "lint": "oxlint",
+    "prepublishOnly": "npm run build:lib"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "oxlint": "^1.79.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "typescript": "~6.0.2",
+    "vite": "^8.2.2"
+  }
+}

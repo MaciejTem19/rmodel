@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.cjs.tsbuildinfo",
+    /* The same declarations again, next to a package.json marking the folder
+       CommonJS — that is what makes a `require`-flavoured consumer under
+       node16/nodenext resolution accept them. Maps are left to the ESM copy. */
+    "declarationMap": false,
+    "declarationDir": "./dist/cjs"
+  }
+}

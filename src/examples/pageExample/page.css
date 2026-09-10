@@ -1,0 +1,188 @@
+/* The looks of the pageExample mini-site. One namespaced block, the way
+   mail.css is: everything hangs off .site, and the colours are mixes of
+   currentColor, so the page follows the browser's light or dark scheme without
+   a second palette. */
+
+.site {
+  --line: color-mix(in srgb, currentColor 22%, transparent);
+  --soft: color-mix(in srgb, currentColor 7%, transparent);
+
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.site h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+/* The title of a page and the way out of it, on one line. */
+.page-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.site h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+}
+
+.site p {
+  margin: 0.35rem 0;
+}
+
+.btn {
+  padding: 0.35rem 0.7rem;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--soft);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn[aria-current='true'] {
+  border-color: currentColor;
+  font-weight: 600;
+}
+
+.push-right {
+  margin-left: auto;
+}
+
+.card {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.muted {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+/* Mail */
+
+.inbox {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.inbox-row {
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.7rem;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.inbox-row:hover:not(:disabled) {
+  background: var(--soft);
+}
+
+/* The open row, which is the one whose button is disabled: it is where you
+   already are, not something to click again. */
+.inbox-row:disabled {
+  cursor: default;
+  border-color: currentColor;
+  background: var(--soft);
+}
+
+.inbox-from {
+  font-weight: 600;
+  margin-right: 0.4rem;
+}
+
+.reader {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.reader-body {
+  margin: 0.75rem 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+
+/* The second the task is in flight. It breathes rather than sits there, so the
+   wait reads as "on its way" instead of "nothing happened". */
+.loading {
+  opacity: 0.55;
+  animation: site-pulse 1s ease-in-out infinite;
+}
+
+@keyframes site-pulse {
+  50% { opacity: 0.25; }
+}
+
+/* News */
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.4rem 0.6rem;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+/* Tall enough to scroll on purpose: the position it is left at goes into the
+   storage's refs, and nothing rerenders for it. */
+.headlines {
+  max-height: 11rem;
+  overflow-y: auto;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.headline {
+  margin: 0;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.headline:last-child {
+  border-bottom: none;
+}
