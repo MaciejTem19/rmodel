@@ -134,33 +134,19 @@ export function RModel<
         saveToBrowser = false,
     } = props as RModelProp<T, A, S, R, E> & Partial<ApiProp<A> & SelectorsProp<S> & RefsProp<R>>
 
-    // What the storage is built with: the saved data where there is any, the
-    // default value everywhere else. Resolved here rather than in the effect
-    // below so that the one render before the storage exists already reads the
-    // saved values through the scope — and memoised on the key alone, for the
-    // same reason the effect is: a later render must not reload underneath a
-    // storage that is already live.
-    /* oxlint-disable react-hooks/exhaustive-deps */
+
     const initialValue = useMemo(
         () => (loadFromBrowser ? loadSaved<T>(storageKey, defaultValue) : defaultValue),
         [storageKey],
     )
     /* oxlint-enable react-hooks/exhaustive-deps */
 
-    // Pinned to the key for the same reason, and for one more: a ref taken below
-    // is written into this very object, so a fresh one on the next render would
-    // throw away what the subtree has already put there.
-    /* oxlint-disable-next-line react-hooks/exhaustive-deps */
+    //storing refs in memo, so it has stable reference
     const storeRefs = useMemo(() => refs ?? ({} as R), [storageKey])
 
     // What this <RModel /> holds the storage as. A ref rather than the key, so
     // two of them on one key are still two holders.
     const holder = useRef({})
-
-    // Read by the cleanup below, which runs in the commit — before any passive
-    // effect could have brought a ref up to date. Syncing it here, on every
-    // commit, is what keeps `remember` out of the storage effect's deps: it is
-    // a rule for the way out, not a reason to rebuild the storage.
     const rememberStorage = useRef(remember)
 
     useLayoutEffect(() => {
