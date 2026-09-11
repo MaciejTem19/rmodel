@@ -1,5 +1,5 @@
 import { memo, useLayoutEffect, useRef, useState } from "react"
-import { RModel, useRDataApi, useREmit, useROn, useRRef, useRSelector, useRSetter, useRValue, useRValuesSetter } from "rmodel"
+import { RVModel, useRDataApi, useREmit, useROn, useRRef, useRSelector, useRSetter, useRValue, useRValuesSetter } from "rvmodel"
 import Button from "../template/ui/Button"
 import TextInput from "../template/ui/TextInput"
 import "../template/template.css"
@@ -46,7 +46,7 @@ export function SecondExamplePage() {
 
     useRenderLog("SecondExamplePage")
 
-    return (<RModel
+    return (<RVModel
         defaultValue={SEC_DEFAULT_VALUES}
         storageKey={EX_KEY}
         dataApi={EX_API}
@@ -56,7 +56,7 @@ export function SecondExamplePage() {
         saveToBrowser={true}
     >
         {<SecPage />}
-    </RModel>)
+    </RVModel>)
 }
 
 /** Holds the page together and reads nothing: it renders once and stays put. */

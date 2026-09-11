@@ -1,5 +1,5 @@
 {
-  "name": "rmodel",
+  "name": "rvmodel",
   "version": "0.1.0",
   "description": "A lightweight state management library for React, built around the state of a single page — a ViewModel for the page.",
   "license": "MIT",
@@ -13,18 +13,18 @@
     "hooks",
     "typescript"
   ],
-  "main": "./dist/rmodel.cjs",
-  "module": "./dist/rmodel.js",
+  "main": "./dist/rvmodel.cjs",
+  "module": "./dist/rvmodel.js",
   "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/main.d.ts",
-        "default": "./dist/rmodel.js"
+        "default": "./dist/rvmodel.js"
       },
       "require": {
         "types": "./dist/cjs/main.d.ts",
-        "default": "./dist/rmodel.cjs"
+        "default": "./dist/rvmodel.cjs"
       }
     },
     "./package.json": "./package.json"

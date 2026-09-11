@@ -1,4 +1,4 @@
-# rmodel
+# rvmodel
 
 A lightweight state management library for React — closest in spirit to Redux or
 Zustand, but built around the state of a single page rather than of the whole
@@ -8,7 +8,7 @@ per page, declared where the page starts and gone when it leaves.
 ## Installating library
 
 ```bash
-npm install rmodel
+npm install rvmodel
 ```
 
 React 18 or newer is a peer dependency — the package uses the one your app
@@ -17,7 +17,7 @@ already has.
 ## Use
 
 ```tsx
-import { RModel, storeKey, useRValue, useRSetter } from 'rmodel'
+import { RVModel, storeKey, useRValue, useRSetter } from 'rvmodel'
 
 const COUNTER = storeKey<{ data: { count: number } }>('counter')
 
@@ -30,14 +30,14 @@ function Count() {
 
 export function Page() {
     return (
-        <RModel storageKey={COUNTER} defaultValue={{ count: 0 }}>
+        <RVModel storageKey={COUNTER} defaultValue={{ count: 0 }}>
             <Count />
-        </RModel>
+        </RVModel>
     )
 }
 ```
 
-`<RModel />` holds the store, `storeKey` names and types it, and the hooks read
+`<RVModel />` holds the store, `storeKey` names and types it, and the hooks read
 and write single values — a component rerenders only for the value it asked for.
 From there the library adds computed selectors, refs, events, async tasks and
 browser persistence.

@@ -1,5 +1,5 @@
 /* The public surface. Everything the model offers is re-exported here, so a
-   consumer imports from 'rmodel' and never has to know which file a piece
+   consumer imports from 'rvmodel' and never has to know which file a piece
    of it lives in. */
 
 export { shallowEqual } from './shallowEqual.js'
@@ -18,8 +18,8 @@ export { createStore, extenralStorage, getStore, storeHolders, subscribeStorage,
 
 export { browserKey, keepInBrowser, load, loadFromBrowser, saveToBrowser } from './persistence.js'
 
-export { RModel } from './RModel.js'
-export type { RModelProp } from './RModel.js'
+export { RVModel } from './RVModel.js'
+export type { RVModelProp } from './RVModel.js'
 
 export { storeApi } from './storeApi.js'
 export type { StoreApi } from './storeApi.js'

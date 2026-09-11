@@ -11,9 +11,9 @@ export default defineConfig({
   build: {
     lib: {
       entry: fileURLToPath(new URL('./lib/main.ts', import.meta.url)),
-      name: 'RModel',
+      name: 'RVModel',
       formats: ['es', 'cjs'],
-      fileName: (format) => (format === 'es' ? 'rmodel.js' : 'rmodel.cjs'),
+      fileName: (format) => (format === 'es' ? 'rvmodel.js' : 'rvmodel.cjs'),
     },
     rollupOptions: {
       /* React is the consumer's, not ours — see peerDependencies. */

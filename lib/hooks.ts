@@ -1,5 +1,5 @@
 /* What a component reads the model through. Every hook here promises a value:
-   it falls back to what <RModel /> is about to build the storage with, and
+   it falls back to what <RVModel /> is about to build the storage with, and
    throws for a key with nothing behind it at all. */
 import {
     useCallback, useContext, useLayoutEffect, useMemo, useRef, useSyncExternalStore,
@@ -24,7 +24,7 @@ import type {
  */
 function noStorage(hook: string, key: string): never {
     throw new Error(
-        `${hook}() found no storage under '${key}'. Mount <RModel storageKey="${key}" /> above it, `
+        `${hook}() found no storage under '${key}'. Mount <RVModel storageKey="${key}" /> above it, `
         + `or create the storage with createStore('${key}', …) before reading it.`,
     )
 }
@@ -46,7 +46,7 @@ export function useRStoreApi<T extends object>(key: StoreKey<T>): StoreApi<T> {
 
 
 /**
- * The key of the storage the nearest <RModel /> above created. Name the types
+ * The key of the storage the nearest <RVModel /> above created. Name the types
  * it holds and every key-taking hook below infers from it:
  *
  *   const key = useRKey<{ data: PageState, api: PageApi }>()
@@ -65,14 +65,14 @@ export function useRKey<Sh extends ValidShape<Sh>>(): KeyOf<Sh> {
     const scope = useContext(StoreKeyContext)
 
     if (!scope) {
-        throw new Error('useRKey() must be called inside <RModel />')
+        throw new Error('useRKey() must be called inside <RVModel />')
     }
 
     return scope.key as KeyOf<Sh>
 }
 
 /**
- * What the <RModel /> above was given, while its storage does not exist yet —
+ * What the <RVModel /> above was given, while its storage does not exist yet —
  * and only when it is the same key. A storage built by createStore() needs
  * none of this: it exists before anything gets a chance to read.
  */
@@ -99,7 +99,7 @@ function useStoreDefaultValue<T extends object>(key: string): T | undefined {
  * It rerenders when storage is built, dropped or replaced, but **not** when its data changes -
  * to read values use `useRValue` or `useRValues`.
  *
- * Unlike other hooks it promises nothing: there is no fallback to the default value of <RModel />,
+ * Unlike other hooks it promises nothing: there is no fallback to the default value of <RVModel />,
  * because before the storage exists there is no store to hand back.
  * @type Sh shape of the store
  * @param key store key
@@ -178,7 +178,7 @@ export function useRValueAsRef<T extends object, K extends keyof T>(
     const store = useRStoreApi<T>(key)
     const defaultValue = useStoreDefaultValue<T>(key)
 
-    // Same fallback as useRValue(): until <RModel /> has built the storage, the
+    // Same fallback as useRValue(): until <RVModel /> has built the storage, the
     // value it is about to be built with is the value.
     const data = store.getData() ?? defaultValue
 
@@ -306,7 +306,7 @@ export function useRRef<R extends object, K extends keyof R>(
     key: StoreKey<any, any, any, R>,
     name: K,
 ): RefObject<R[K]> {
-    // What <RModel /> is holding while its storage does not exist yet. The same
+    // What <RVModel /> is holding while its storage does not exist yet. The same
     // object the storage will carry, so a ref attached before it was built is
     // not lost when it is.
     const pending = useStoreScope(key)?.refs as R | undefined
@@ -343,10 +343,10 @@ export function useRRef<R extends object, K extends keyof R>(
 }
 
 /**
- * Refs of a store under `key`, or the ones <RModel /> is about to build the storage with.
+ * Refs of a store under `key`, or the ones <RVModel /> is about to build the storage with.
  * @type R type of store refs
  * @param key store key
- * @param pending refs held by <RModel /> while its storage does not exist yet
+ * @param pending refs held by <RVModel /> while its storage does not exist yet
  * @returns refs object shared by the subtree
  */
 function refsOf<R extends object>(key: string, pending: R | undefined): R {
@@ -355,7 +355,7 @@ function refsOf<R extends object>(key: string, pending: R | undefined): R {
     if (!refs) {
         throw new Error(
             `useRRef() found no refs under '${key}'. Mount `
-            + `<RModel storageKey="${key}" refs={…} /> above it, or create the storage with `
+            + `<RVModel storageKey="${key}" refs={…} /> above it, or create the storage with `
             + `createStore('${key}', data, api, selectors, refs) before taking a ref of it.`,
         )
     }
@@ -382,7 +382,7 @@ export function useRSelector<
     S extends StoreSelectors<T, any>,
     K extends SelectorName<T, S>,
 >(key: StoreKey<T, any, S, any>, name: K): SelectorValue<S, K> {
-    // What <RModel /> is about to build the storage with, for the render that
+    // What <RVModel /> is about to build the storage with, for the render that
     // comes before it exists — the very same instance, so a name resolves to
     // the same selector on both sides of the storage appearing.
     const pending = useStoreScope(key)?.selectors as S | undefined
@@ -400,7 +400,7 @@ function namedSelector<T extends object, V>(
     if (!selectors) {
         throw new Error(
             `useRSelector() found no selectors under '${key}' to look '${String(name)}' up in. `
-            + `Mount <RModel storageKey="${key}" selectors={…} /> above it, or create the storage `
+            + `Mount <RVModel storageKey="${key}" selectors={…} /> above it, or create the storage `
             + `with createStore('${key}', data, api, selectors) before reading it by name.`,
         )
     }
@@ -548,7 +548,7 @@ export function useRDataApi<T extends object, A extends DataApi<T>>(key: StoreKe
         if (!dataApi) {
             throw new Error(
                 `useRDataApi() found no api under '${key}'. Mount `
-                + `<RModel storageKey="${key}" dataApi={…} /> above it, or create the storage `
+                + `<RVModel storageKey="${key}" dataApi={…} /> above it, or create the storage `
                 + `with createStore('${key}', data, api) before reading it.`,
             )
         }
@@ -778,7 +778,7 @@ export function useREmit<E extends object, K extends keyof E>(
  * dependency, and changing it resubscribes nothing.
  *
  * Subscription survives the storage being built, dropped and rebuilt under the key, so listening
- * from a component mounted before <RModel /> is not a race.
+ * from a component mounted before <RVModel /> is not a race.
  * @type E type of store events
  * @type K name of an event
  * @param key store key

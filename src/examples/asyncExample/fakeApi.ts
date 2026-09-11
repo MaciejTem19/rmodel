@@ -24,7 +24,7 @@ const TABLE: Issue[] = [
     { id: 1, title: 'Selector fires twice on a batched write', author: 'ada', tag: 'bug', done: false },
     { id: 2, title: 'Document the remember prop', author: 'linus', tag: 'chore', done: true },
     { id: 3, title: 'Cancel in-flight tasks on unmount', author: 'ada', tag: 'feature', done: false },
-    { id: 4, title: 'Split RModel into modules', author: 'grace', tag: 'chore', done: true },
+    { id: 4, title: 'Split RVModel into modules', author: 'grace', tag: 'chore', done: true },
     { id: 5, title: 'Throw instead of returning undefined', author: 'grace', tag: 'feature', done: false },
     { id: 6, title: 'Row re-renders when a sibling changes', author: 'linus', tag: 'bug', done: false },
 ]

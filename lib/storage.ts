@@ -11,7 +11,7 @@ export type StorageListener = () => void
 export const extenralStorage: Map<string, Store<any>> = new Map
 const storageListeners = new Map<string, Set<StorageListener>>()
 
-/** Who is holding each storage — one entry per mounted <RModel />, so the last one out drops it. */
+/** Who is holding each storage — one entry per mounted <RVModel />, so the last one out drops it. */
 const storageHolders = new Map<string, Set<object>>()
 
 /**
@@ -26,7 +26,7 @@ const notifyStorage = (key: string) => {
 
 /**
  * Watches one slot of the registry: fires when the store under `key` shows up or
- * goes away, so a component can render before <RModel /> built it.
+ * goes away, so a component can render before <RVModel /> built it.
  * @param key store key
  * @param listener called on every arrival and departure
  * @returns unsubscribe function
@@ -81,7 +81,7 @@ export function unregisterStore<T extends object>(key: string, store: AnyStore<T
 }
 
 /**
- * How many <RModel /> are holding the storage under `key` right now.
+ * How many <RVModel /> are holding the storage under `key` right now.
  * @param key store key
  * @returns number of holders
  */
@@ -96,7 +96,7 @@ export type Claim<
     R extends object = StoreRefs,
 > = {
     key: string
-    /** Whoever is claiming it — one <RModel />, identified by a stable object. */
+    /** Whoever is claiming it — one <RVModel />, identified by a stable object. */
     holder: object
     /** Whether an existing storage may be shared — with it off, a second holder is an error. */
     allowShared: boolean
@@ -138,7 +138,7 @@ export function claimStore<
 
     if (existing && !allowShared && storeHolders(key) > 0) {
         throw new Error(
-            `<RModel storageKey="${key}" /> has allowSharedStore off, and another <RModel /> `
+            `<RVModel storageKey="${key}" /> has allowSharedStore off, and another <RVModel /> `
             + `is already holding that storage. Give this one a key of its own, or let them share it.`,
         )
     }
@@ -197,7 +197,7 @@ type SkippableSelectors<T extends object, S extends StoreSelectors<T, any>> =
 
 /**
  * Builds a store and puts it in the registry, waking whoever waits on the key.
- * The key says which parts it insists on, the way it does at a <RModel />. On a
+ * The key says which parts it insists on, the way it does at a <RVModel />. On a
  * key which already has a storage it takes the slot over and disposes the old
  * one, rather than sharing it the way claimStore() does.
  * @type T data type of store

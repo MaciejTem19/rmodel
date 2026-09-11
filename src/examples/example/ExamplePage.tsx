@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { RModel, useRSelector, useRValue } from 'rmodel'
+import { RVModel, useRSelector, useRValue } from 'rvmodel'
 import Button from '../template/ui/Button'
 import TextInput from '../template/ui/TextInput'
 import '../template/template.css'
@@ -34,7 +34,7 @@ function ExamplePage() {
   useRenderLog('ExamplePage')
 
   return (
-    <RModel
+    <RVModel
       storageKey={EX_KEY}
       defaultValue={EX_DEFAULT}
       dataApi={exampleApi}
@@ -45,7 +45,7 @@ function ExamplePage() {
         <Clicker />
         <Products />
       </main>
-    </RModel>
+    </RVModel>
   )
 }
 

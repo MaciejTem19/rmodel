@@ -1,4 +1,4 @@
-import { getStore, shallowEqual, storeKey, useRCustomSelector, type Selector } from 'rmodel'
+import { getStore, shallowEqual, storeKey, useRCustomSelector, type Selector } from 'rvmodel'
 import type { Filter, Item } from './types'
 
 export const PAGE_KEY = storeKey<{ data: PageState }>('page')
@@ -112,7 +112,7 @@ export type PageValues = PageState & PageDerived & PageActions
  * the item list changes — and one asking for an action never subscribes at all.
  */
 export function usePageValues<K extends keyof PageValues>(names: readonly K[]): Pick<PageValues, K> {
-  // useRCustomSelector() falls back to the default value <RModel /> was given,
+  // useRCustomSelector() falls back to the default value <RVModel /> was given,
   // and throws for a component reading the model from outside it — so what
   // comes back here is always a full slice.
   return useRCustomSelector(PAGE_KEY, {

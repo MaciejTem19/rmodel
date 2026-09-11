@@ -1,4 +1,4 @@
-# RModel
+# RVModel
 
 A lightweight state management library for React — closest in spirit to Redux or
 Zustand, but built around state management for a single page rather than for the
@@ -10,8 +10,8 @@ Looking for one particular signature rather than the story? That is
 **Contents**
 
 1. [Let's start with an example](#lets-start-with-an-example)
-2. [RModel to the rescue](#rmodel-to-the-rescue)
-3. [The `<RModel />` component](#the-rmodel--component)
+2. [RVModel to the rescue](#rvmodel-to-the-rescue)
+3. [The `<RVModel />` component](#the-rvmodel--component)
 4. [Store keys](#store-keys)
 5. [Reading values](#reading-values)
 6. [Rerenders](#rerenders)
@@ -21,7 +21,7 @@ Looking for one particular signature rather than the story? That is
 10. [Computed values: selectors](#computed-values-selectors)
 11. [Refs: what nothing renders from](#refs-what-nothing-renders-from)
 12. [Events: what merely happened](#events-what-merely-happened)
-13. [The rest of the `<RModel />` props](#the-rest-of-the-rmodel--props)
+13. [The rest of the `<RVModel />` props](#the-rest-of-the-rvmodel--props)
 14. [Stacking models: the app above, the page below](#stacking-models-the-app-above-the-page-below)
 15. [Setting values from a task](#setting-values-from-a-task)
 16. [Updating by task: building on the value that is there](#updating-by-task-building-on-the-value-that-is-there)
@@ -145,9 +145,9 @@ We can of course stack one provider per piece of data:
 
 ---
 
-## RModel to the rescue
+## RVModel to the rescue
 
-RModel aims to fix both. It lets you declare a data container high up in the tree,
+RVModel aims to fix both. It lets you declare a data container high up in the tree,
 where all the data of that page lives — like the context above, but without either
 problem.
 
@@ -161,20 +161,20 @@ export type ContactData = {
 }
 ```
 
-Once we have the shape of our stored data, we can hand it to `<RModel />`.
+Once we have the shape of our stored data, we can hand it to `<RVModel />`.
 
 ---
 
-## The `<RModel />` component
+## The `<RVModel />` component
 
-`<RModel />` is a wrapper that creates the storage, talks to it, and deletes it on
+`<RVModel />` is a wrapper that creates the storage, talks to it, and deletes it on
 the way out. You can mount as many of them as you like across the app, and one
-`<RModel />` may sit below another. It also works as a context provider for a
+`<RVModel />` may sit below another. It also works as a context provider for a
 couple of quality-of-life features, but we don't have to worry about them right now.
 
 ### Idea behind this
 
-RModel aims to provide view model for a component. It should live as long, as component does and only in some situations should be remebered or live somewhere. Difference betwwen it and Redux or Zustand it is meant to be bound to components and the storage system, wich leaves outside react, is becouse of optimalization and more flexibility. Hovewer aim is to declare data you want to store in some component - you use data across children components and change it, while not worring about unnecessary rerenders.
+RVModel aims to provide view model for a component. It should live as long, as component does and only in some situations should be remebered or live somewhere. Difference betwwen it and Redux or Zustand it is meant to be bound to components and the storage system, wich leaves outside react, is becouse of optimalization and more flexibility. Hovewer aim is to declare data you want to store in some component - you use data across children components and change it, while not worring about unnecessary rerenders.
 
 
 Btw, library do not want to be better than already existing solutions - it is different aproach to similiar problem.
@@ -187,7 +187,7 @@ Every storage has its own key which is represented as a string. Those keys are t
 const CONTACT_KEY = "contact"
 ```
 
-When we decide what key to use, we still need the type of our data. RModel expects some `object`, so we need to form one, we can do it with `type` keyword, like we did with context provider example:
+When we decide what key to use, we still need the type of our data. RVModel expects some `object`, so we need to form one, we can do it with `type` keyword, like we did with context provider example:
 
 ```tsx
 
@@ -213,17 +213,17 @@ and then, we pass key and default data:
 ```tsx
 export function ContactPage() {
     return (
-        <RModel storageKey={CONTACT_KEY} defaultValue={CONTACT_DEFAULT}>
+        <RVModel storageKey={CONTACT_KEY} defaultValue={CONTACT_DEFAULT}>
             <Contact />
-        </RModel>
+        </RVModel>
     )
 }
 ```
 
 Two places can deliberately use the same key, and a storage can outlive the
-component that mounted it or share you can create other `<RModel>` component referencing to the same storage, so naming it is what makes both possible. It is also crucial, while sharing or remembering store state for you to pass same types, that were used earlier in same storage. 
+component that mounted it or share you can create other `<RVModel>` component referencing to the same storage, so naming it is what makes both possible. It is also crucial, while sharing or remembering store state for you to pass same types, that were used earlier in same storage. 
 
-When two `<RModel />` are stacked, the key is what tells them apart:
+When two `<RVModel />` are stacked, the key is what tells them apart:
 
 
 ```tsx
@@ -231,16 +231,16 @@ When two `<RModel />` are stacked, the key is what tells them apart:
     export function PageSomething() {
         return (
             //Main store with different key...
-            <RModel storageKey={MAIN_STORE} defaultValue={MAIN_DEF}>
+            <RVModel storageKey={MAIN_STORE} defaultValue={MAIN_DEF}>
                 
                 <div>
                     {/* ... with secondary, so we can manage data from both of them simultaneously */}
-                    <RModel storageKey={PAGE_STORE} defaultValue={PAGE_DEF}>
+                    <RVModel storageKey={PAGE_STORE} defaultValue={PAGE_DEF}>
                         <Page />
-                    </RModel>
+                    </RVModel>
                 <div/>
                 <BlaBlaPage />
-            <RModel/>)
+            <RVModel/>)
     }
 
 ```
@@ -282,13 +282,13 @@ along with it.
 
 Actually, all hooks require the key to be passed in, so they can evaluate types.
 
-`<RModel />` takes it too, and that is the other half of what a key is for. Hand
+`<RVModel />` takes it too, and that is the other half of what a key is for. Hand
 the key to `storageKey` and the mounting is checked against what it names: the
 `defaultValue` has to be the data the key describes, the `dataApi` has to be an
 api over that data, those refs and those events, and the selectors the same.
 
 ```tsx
-<RModel storageKey={CONTACT_KEY} defaultValue={CONTACT_DEFAULT} dataApi={contactApi}>
+<RVModel storageKey={CONTACT_KEY} defaultValue={CONTACT_DEFAULT} dataApi={contactApi}>
 ```
 
 A part the key names is required rather than merely checked: a key promising
@@ -312,7 +312,7 @@ Mount it with a plain `'contact'` instead and it still works — a key is a stri
 at runtime — but there is nothing to check against and nothing is required, so
 the parts are worked out from the props alone. The key is what makes a storage
 mounted with someone else's api, or with a default value missing half its
-fields, an error at the `<RModel />` rather than a surprise in whatever reads by
+fields, an error at the `<RVModel />` rather than a surprise in whatever reads by
 that key later.
 
 
@@ -366,7 +366,7 @@ one above: the key, and the names of the fields to read.
 Every hook takes the key — that is what carries the types, and what leaves no
 doubt about which storage a component reads. When importing the key constant
 everywhere gets tiresome, `useRKey()` hands you the key of the **nearest
-`<RModel />` above**, with the types you name on it:
+`<RVModel />` above**, with the types you name on it:
 
 ```tsx
 export const useContactKey = () => useRKey<{ data: ContactData, api: ContactApi }>()
@@ -377,9 +377,9 @@ const api = useRDataApi(useContactKey())
 
 One line in the model file, and the components below name neither the key string
 nor the types again. It is also what makes a subtree portable: mount the same
-components under a `<RModel />` on another key and they follow it.
+components under a `<RVModel />` on another key and they follow it.
 
-> The word doing the work there is **nearest**. With a single `<RModel />` above
+> The word doing the work there is **nearest**. With a single `<RVModel />` above
 > a component there is nothing to get wrong — but models stack, an app-wide one
 > above a page's own, and down inside the page `useRKey()` is the page's key, not
 > the app's. A helper written for the model that is *not* the nearest hands out
@@ -630,19 +630,19 @@ This way TypeScript knows our api type, and after `useRDataApi(CONTACT_KEY)`
 our own methods are right there next to the built-in ones.
 
 
-And second, an instance of the api has to be handed to `<RModel />`:
+And second, an instance of the api has to be handed to `<RVModel />`:
 
 ```tsx
-/* One instance per storage, built here rather than in the JSX: <RModel /> reads
+/* One instance per storage, built here rather than in the JSX: <RVModel /> reads
    it once, when it creates the storage, so it has to be a stable object. Writing
    dataApi={new ContactApi()} would build a new one on every render. */
 export const contactApi = new ContactApi()
 
 export function ContactPage() {
     return (
-        <RModel storageKey={CONTACT_KEY} defaultValue={CONTACT_DEFAULT} dataApi={contactApi}>
+        <RVModel storageKey={CONTACT_KEY} defaultValue={CONTACT_DEFAULT} dataApi={contactApi}>
             <Contact />
-        </RModel>
+        </RVModel>
     )
 }
 ```
@@ -682,11 +682,11 @@ component gets.
 | `this.runTask(task, onCancel?)` | Runs an async task and writes what it hands back with one `setValues()`. `onCancel` is the state to put back, written the moment the task is called off. Returns the cancel. |
 | `this.trackTask(body, onDone?)` | The bare form underneath it: runs `body` as a task of this storage — so a cancel and a dropped storage reach it — and writes nothing by itself. |
 
-`attach` and `detach` are public too, but they belong to `<RModel />`: it calls
+`attach` and `detach` are public too, but they belong to `<RVModel />`: it calls
 them as it builds and drops the storage. There is nothing to call them for.
 
 Every one of these throws once the storage behind it is gone — an api used after
-its `<RModel />` unmounted has nowhere to write, and saying so beats writing into
+its `<RVModel />` unmounted has nowhere to write, and saying so beats writing into
 a store nobody reads. `cancelTasks()` is the exception: with the storage went
 everything it had running, so there is nothing left to call off and it stays
 quiet.
@@ -825,7 +825,7 @@ once and read by that name everywhere.
 
 ### What is the point of dependencies?
 
-The dependency list is what tells RModel when the answer might have moved. The
+The dependency list is what tells RVModel when the answer might have moved. The
 selector is worked out again after a write to one of those fields and after no
 other write, so the value is never stale and nothing is computed for nothing.
 
@@ -858,7 +858,7 @@ export class ContactSelectors extends StoreSelectors<ContactData> {
 
 ```
 
-Then we build one instance of it and hand it to `<RModel />`. And once again the
+Then we build one instance of it and hand it to `<RVModel />`. And once again the
 `storeKey()` call has to name the new type:
 
 ```tsx
@@ -873,14 +873,14 @@ export const CONTACT_KEY = storeKey<{
 
 export function ContactPage() {
     return (
-        <RModel
+        <RVModel
             storageKey={CONTACT_KEY}
             defaultValue={CONTACT_DEFAULT}
             dataApi={contactApi}
             selectors={contactSelectors}
         >
             <Contact />
-        </RModel>
+        </RVModel>
     )
 }
 ```
@@ -927,18 +927,18 @@ contactSelectors.read(WORD_COUNT)
 
 ### Attaching them to the storage
 
-Selectors are handed to `<RModel />` the same way an api is, and the key carries
+Selectors are handed to `<RVModel />` the same way an api is, and the key carries
 their type as the third parameter — both of which the section above already did.
 Two rules are worth spelling out, and they are the api's rules exactly:
 
-**One instance per storage, built at module level.** `<RModel />` reads
+**One instance per storage, built at module level.** `<RVModel />` reads
 `selectors` once, when it creates the storage, so it has to be a stable object:
 
 ```tsx
 export const contactSelectors = new ContactSelectors()
 
 // ✓ the same instance on every render
-<RModel
+<RVModel
     storageKey={CONTACT_KEY}
     defaultValue={CONTACT_DEFAULT}
     dataApi={contactApi}
@@ -946,7 +946,7 @@ export const contactSelectors = new ContactSelectors()
 >
 
 // ✗ a new one every render — and every one after the first is ignored
-<RModel
+<RVModel
     storageKey={CONTACT_KEY}
     defaultValue={CONTACT_DEFAULT}
     dataApi={contactApi}
@@ -960,7 +960,7 @@ that is already reading through them.
 
 **The instance holds no data.** `this.select()` only writes down the
 computation; what it runs against is the storage the instance was attached to
-when `<RModel />` built it. That is what makes `contactSelectors.read('canSend')`
+when `<RVModel />` built it. That is what makes `contactSelectors.read('canSend')`
 work from anywhere — and also why reading through a set of selectors whose
 storage has been dropped throws, instead of quietly answering from data nobody
 can see any more.
@@ -982,7 +982,7 @@ several components need the same one, none of them draws it, and putting it in
 the storage's data would mean a rerender every time it moves.
 
 That is the storage's other half. Beside the data it carries a **refs** object:
-declared as a type, handed to `<RModel />`, written in place, listened to by
+declared as a type, handed to `<RVModel />`, written in place, listened to by
 nobody. Declaration is pretty similar to normal data. First, we need the type of our ref container:
 
 ```ts
@@ -1004,14 +1004,14 @@ export const CONTACT_KEY = storeKey<{
     refs: ContactRefs
 }>('contact')
 ```
-and pass it down to RModel as an object, which contains the default values of our container
+and pass it down to RVModel as an object, which contains the default values of our container
 
 ```tsx
 //We declare our default values. One object per storage, at module level: this is
-//the very object the subtree writes into, and <RModel /> reads it once.
+//the very object the subtree writes into, and <RVModel /> reads it once.
 export const CONTACT_REFS: ContactRefs = { email: null, lastSentAt: 0 }
 
-<RModel
+<RVModel
     storageKey={CONTACT_KEY}
     defaultValue={CONTACT_DEFAULT}
     dataApi={contactApi}
@@ -1232,12 +1232,12 @@ And the api is checked against it. An api that announces one set of events does
 not fit a key claiming another — the parts of a shape are checked against each
 other, not one at a time.
 
-Nothing is handed to `<RModel />` for it, and nothing has to be: there is no
+Nothing is handed to `<RVModel />` for it, and nothing has to be: there is no
 value to hand over, and the events are the fifth of the five things the key
 carries, so mounting with the key is what names them.
 
 ```tsx
-<RModel
+<RVModel
     storageKey={CONTACT_KEY}
     defaultValue={CONTACT_DEFAULT}
     dataApi={contactApi}
@@ -1357,7 +1357,7 @@ render has. It is not a dependency, and changing it resubscribes nothing.
 
 ---
 
-## The rest of the `<RModel />` props
+## The rest of the `<RVModel />` props
 
 Everything past `storageKey` and `defaultValue` is optional — except the parts
 the key names, which are required at the mounting.
@@ -1369,14 +1369,14 @@ the key names, which are required at the mounting.
 | `dataApi` | `A extends DataApi<T, R, E>` | empty api | The write half, attached as the storage is built. Name the refs on it — `DataApi<T, R>` — and it can write into them as well. Required where the key names an api. |
 | `selectors` | `S extends StoreSelectors<T, R>` | empty set | The read half, on the same terms, and required on the same terms. |
 | `refs` | `R extends object` | empty object | The refs the storage carries — see [Refs](#refs-what-nothing-renders-from). Required where the key names them. |
-| `remember` | `boolean` | `false` | Keeps the storage alive after the last `<RModel />` on the key unmounts. |
-| `allowSharedStore` | `boolean` | `true` | Whether a second `<RModel />` may adopt a storage someone else is holding. |
+| `remember` | `boolean` | `false` | Keeps the storage alive after the last `<RVModel />` on the key unmounts. |
+| `allowSharedStore` | `boolean` | `true` | Whether a second `<RVModel />` may adopt a storage someone else is holding. |
 | `loadFromBrowser` | `boolean` | `false` | Builds the storage from what was last saved to the browser under this key. |
 | `saveToBrowser` | `boolean` | `false` | Writes the storage to the browser under this key after every write to it. |
 
 ### `remember`
 
-By default, when the last `<RModel />` on a key unmounts, the storage is dropped:
+By default, when the last `<RVModel />` on a key unmounts, the storage is dropped:
 its parts are detached and the work still in flight is cancelled, so a write that
 arrives late says so instead of vanishing into a store nobody can read.
 
@@ -1385,9 +1385,9 @@ is still there — and a write that was already on its way still lands.
 
 ```tsx
 {open && (
-    <RModel storageKey={COMPOSER_KEY} defaultValue={COMPOSER_DEFAULT} dataApi={composerApi} remember>
+    <RVModel storageKey={COMPOSER_KEY} defaultValue={COMPOSER_DEFAULT} dataApi={composerApi} remember>
         <Composer />
-    </RModel>
+    </RVModel>
 )}
 ```
 
@@ -1396,7 +1396,7 @@ lets a send survive the panel being closed halfway through.
 
 ### `allowSharedStore`
 
-One storage per key. Mount a second `<RModel />` on a key that already has one and
+One storage per key. Mount a second `<RVModel />` on a key that already has one and
 it **adopts** what the first built rather than building its own; the storage then
 lives until the last of them unmounts. Its `defaultValue`, `dataApi` and
 `selectors` are ignored — the storage keeps the ones it was built with. Handed
@@ -1407,7 +1407,7 @@ it while the code is being checked.
 Turn the prop off to claim the key exclusively:
 
 ```tsx
-<RModel
+<RVModel
     storageKey={CONTACT_KEY}
     defaultValue={CONTACT_DEFAULT}
     dataApi={contactApi}
@@ -1417,7 +1417,7 @@ Turn the prop off to claim the key exclusively:
 >
 ```
 
-Now a second `<RModel />` on that key throws instead of quietly handing its
+Now a second `<RVModel />` on that key throws instead of quietly handing its
 subtree data, an api and selectors it did not build. A storage nobody is holding
 — one left behind by `remember`, or made with `createStore()` — is adopted either
 way, because adopting it clashes with no one.
@@ -1428,7 +1428,7 @@ Builds the storage from what was last saved to the browser under this key, inste
 of from `defaultValue` alone:
 
 ```tsx
-<RModel
+<RVModel
     storageKey={CONTACT_KEY}
     defaultValue={CONTACT_DEFAULT}
     dataApi={contactApi}
@@ -1449,11 +1449,11 @@ later.
 ### `saveToBrowser`
 
 The other half. With it on, the storage is written to the browser as soon as it
-exists and again after every write to it, for as long as this `<RModel />` is
+exists and again after every write to it, for as long as this `<RVModel />` is
 mounted:
 
 ```tsx
-<RModel
+<RVModel
     storageKey={CONTACT_KEY}
     defaultValue={CONTACT_DEFAULT}
     dataApi={contactApi}
@@ -1483,11 +1483,11 @@ stays there, which is what makes `loadFromBrowser` find it next time.
 
 ## Stacking models: the app above, the page below
 
-As we said before, we can declare as many RModels as we like. We can stack them, or create them as siblings etc. We will dive deeper to concept of stacking models.
+As we said before, we can declare as many RVModels as we like. We can stack them, or create them as siblings etc. We will dive deeper to concept of stacking models.
 
 Not everything belongs to a page. The signed-in user, the theme, the clock in the
 corner — those live as long as the app does, and every page wants them. That is
-a second `<RModel />`, mounted above the router, with the page models sitting
+a second `<RVModel />`, mounted above the router, with the page models sitting
 inside it.
 
 ```ts
@@ -1517,9 +1517,9 @@ export function startClock() {
 ```tsx
 export function App() {
     return (
-        <RModel storageKey={APP_KEY} defaultValue={APP_DEFAULT}>
+        <RVModel storageKey={APP_KEY} defaultValue={APP_DEFAULT}>
             <Shell />
-        </RModel>
+        </RVModel>
     )
 }
 
@@ -1537,7 +1537,7 @@ function Shell() {
                     <Main />
                 </Route>
                 <Route path={'contact'}>
-                    {/* mounts its own <RModel storageKey={CONTACT_KEY}> inside this one */}
+                    {/* mounts its own <RVModel storageKey={CONTACT_KEY}> inside this one */}
                     <ContactPage />
                 </Route>
                 <Route path={'gallery'}>
@@ -1591,12 +1591,12 @@ across visits by giving that one `remember`, and the two decisions stay
 independent of each other.
 
 > One gotcha worth knowing: `useRKey()` hands back the key of the **nearest**
-> `<RModel />`, so inside the contact page it is the contact key, not the app
+> `<RVModel />`, so inside the contact page it is the contact key, not the app
 > one. A helper written as `useAppKey = () => useRKey<{ data: AppData }>()` would
 > quietly hand out the wrong key down there. For a model that is not the nearest,
 > name its exported key — `APP_KEY` — which is what it is for.
 
-Stacking two `<RModel />` on the **same** key is a different thing entirely:
+Stacking two `<RVModel />` on the **same** key is a different thing entirely:
 that is sharing one storage, and
 [`allowSharedStore`](#allowsharedstore) is what governs it.
 
@@ -1684,7 +1684,7 @@ fields in one write, and what to do when the task fails instead of answering.
 
 ### One field: `useRSetterByTask`
 
-RModel does that part for you. The hook takes the key and the field, and hands
+RVModel does that part for you. The hook takes the key and the field, and hands
 back a caller that takes the task — the write happens when the task finishes.
 
 ```tsx
@@ -1701,7 +1701,7 @@ function Something() {
         abort.current?.()
 
         //…and start another. Every call hands back its own cancel. The signal
-        //is RModel's: it is aborted by that cancel and by the storage being
+        //is RVModel's: it is aborted by that cancel and by the storage being
         //dropped, so pass it to whatever is doing the waiting.
         abort.current = call(async (signal) => {
             return await someStringTask(signal)
@@ -2019,7 +2019,7 @@ part is yours to remember.
 ## Keeping data in the browser
 
 Nothing is written behind your back: saving happens because
-`<RModel saveToBrowser />` is on, or because the app asked for it.
+`<RVModel saveToBrowser />` is on, or because the app asked for it.
 
 We can also to this manual way with build in functions:
 
@@ -2051,7 +2051,7 @@ stop it hands back is called. Reach for it outside React — a storage built wit
 const stop = keepInBrowser(CART_KEY)
 ```
 
-Reading back, when you want it outside `<RModel loadFromBrowser />`:
+Reading back, when you want it outside `<RVModel loadFromBrowser />`:
 
 ```ts
 const draft = loadFromBrowser(CONTACT_KEY, CONTACT_DEFAULT) // ContactData
@@ -2085,7 +2085,7 @@ store over `ContactData`, carrying `ContactApi` and `ContactSelectors`, so
 typed. No context and no component — the key is the only thing anything needs.
 
 **The `undefined` is the point.** A hook can promise a value because it runs
-under the `<RModel />` that built the storage; out here nobody promises anything,
+under the `<RVModel />` that built the storage; out here nobody promises anything,
 and a key whose page is not mounted has no storage at all. So the result is
 `Store | undefined`, and a caller that fires whenever it likes has to say what
 happens when the page is not there:
@@ -2107,7 +2107,7 @@ Two neighbours are worth knowing:
   survives the storage being replaced under the key — and its writes throw
   rather than vanish when there is none. Hold it; hold a `Store` only as long as
   you would hold the page.
-- `createStore(key, defaultValue, …)` builds one without a `<RModel />` at all,
+- `createStore(key, defaultValue, …)` builds one without a `<RVModel />` at all,
   for a model that belongs to the app rather than to a page — see
   [Store keys](#store-keys) for the parts it takes.
 

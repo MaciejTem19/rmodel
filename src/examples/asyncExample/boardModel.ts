@@ -8,7 +8,7 @@ import {
     storeKey,
     useRDataApi,
     useRKey,
-} from 'rmodel'
+} from 'rvmodel'
 import { fetchIssues, saveIssue, type Issue } from './fakeApi'
 
 export type Status = 'idle' | 'loading' | 'error'

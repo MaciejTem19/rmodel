@@ -409,7 +409,7 @@ export class Store<
      * It belongs to this store, so the storage being dropped ends it — that is
      * the whole reason the handlers live here rather than in a registry of
      * their own. What outlives an unmount is the storage's business, and
-     * <RModel remember /> is how that is asked for.
+     * <RVModel remember /> is how that is asked for.
      *
      * Nothing is replayed: a handler added after an event was emitted hears
      * nothing about it. What has to be there for a latecomer is data.

@@ -10,14 +10,14 @@ import type { StoreSelectors } from './StoreSelectors.js'
 import type { AnyStore, StoreEvents, StoreKey, StoreRefs } from './types.js'
 
 /**
- * Prop required by `<RModel />` component.
+ * Prop required by `<RVModel />` component.
  * @type T data object representing standard data provided by store, wich works as a state collection across component scope.
  * @type A DataApi object used as a container for custom methods manipulating store. DataApi with objects `T`, `R`, `E` is associated with data, refs, events of a storage.
  * @type S StoreSelector object containing named selectors associated with data. and refs
  * @type R StoreRefs container representing data wich will work as a ref (wont couse rerenders at any time)
  * @type E StoreEvents container representing avaible events named after field name and associated event data provided to handlers.
  */
-export type RModelProp<
+export type RVModelProp<
     T extends object,
     A extends DataApi<T, R, E> = DataApi<T, any, any>,
     S extends StoreSelectors<T, R> = StoreSelectors<T, any>,
@@ -33,11 +33,11 @@ export type RModelProp<
      */
     defaultValue: T
     /**
-     * Should store be rembebered after `<RModel />` unmounting.
+     * Should store be rembebered after `<RVModel />` unmounting.
      */
     remember?: boolean
     /**
-     * Allows store to be used by more than one `<RModel />` across app.
+     * Allows store to be used by more than one `<RVModel />` across app.
      */
     allowSharedStore?: boolean
     /**
@@ -100,7 +100,7 @@ type RefsProp<R> = {
  * puts its key in context so the subtree finds it without being handed anything.
  *
  * The storage is built in a layout effect, so children render once without it
- * and are woken the moment it lands. One storage per key: a second <RModel /> on
+ * and are woken the moment it lands. One storage per key: a second <RVModel /> on
  * a key which already has one adopts it, and the storage lives until the last
  * holder unmounts.
  * @type T data type of store
@@ -111,13 +111,13 @@ type RefsProp<R> = {
  * @param props store key, default value, and the parts the key names
  * @returns children, with the storage's scope provided to them
  */
-export function RModel<
+export function RVModel<
     T extends object,
     A extends DataApi<T, R, E> = DataApi<T, any, any>,
     S extends StoreSelectors<T, R> = StoreSelectors<T, any>,
     R extends object = StoreRefs,
     E extends object = StoreEvents,
->(props: RModelProp<T, A, S, R, E>) {
+>(props: RVModelProp<T, A, S, R, E>) {
     // Widened to the shape every branch of PartsOf has in common: which of the
     // three are required is a question about this mounting's key, and nothing
     // in here is answered differently either way.
@@ -132,7 +132,7 @@ export function RModel<
         allowSharedStore = true,
         loadFromBrowser = false,
         saveToBrowser = false,
-    } = props as RModelProp<T, A, S, R, E> & Partial<ApiProp<A> & SelectorsProp<S> & RefsProp<R>>
+    } = props as RVModelProp<T, A, S, R, E> & Partial<ApiProp<A> & SelectorsProp<S> & RefsProp<R>>
 
 
     const initialValue = useMemo(
@@ -144,7 +144,7 @@ export function RModel<
     //storing refs in memo, so it has stable reference
     const storeRefs = useMemo(() => refs ?? ({} as R), [storageKey])
 
-    // What this <RModel /> holds the storage as. A ref rather than the key, so
+    // What this <RVModel /> holds the storage as. A ref rather than the key, so
     // two of them on one key are still two holders.
     const holder = useRef({})
     const rememberStorage = useRef(remember)

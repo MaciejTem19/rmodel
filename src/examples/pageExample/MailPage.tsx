@@ -1,5 +1,5 @@
 import { useRenderLog } from "../example/useRenderLog"
-import { useRDataApi, useRSelector, useRValue } from "rmodel"
+import { useRDataApi, useRSelector, useRValue } from "rvmodel"
 import { APP_KEY, MAIL_KEY } from "./dataModel"
 
 /**
@@ -32,7 +32,7 @@ export function MailPage() {
 
 /**
  * Written to the app storage from inside the mail one: a key is looked up in
- * the registry rather than in the nearest <RModel /> above, so the page below
+ * the registry rather than in the nearest <RVModel /> above, so the page below
  * reaches the model that mounted it without anything being handed down.
  */
 function BackHome() {

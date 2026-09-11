@@ -1,4 +1,4 @@
-import { DataApi, shallowEqual, storeKey, StoreSelectors } from "rmodel"
+import { DataApi, shallowEqual, storeKey, StoreSelectors } from "rvmodel"
 
 //App model
 
@@ -167,7 +167,7 @@ const BODIES: Record<number, string> = {
         + "them. Read one from a selector all you like — just do not expect it to "
         + "be the reason anything recomputes.",
 
-    2: "Third time this week. The <RModel /> above it unmounted, so the storage "
+    2: "Third time this week. The <RVModel /> above it unmounted, so the storage "
         + "went with it, and every write since has been saying so. Try remember, "
         + "or stop unmounting the thing.",
 
@@ -212,7 +212,7 @@ function fetchBody(id: number, signal: AbortSignal): Promise<string> {
 
 //singletons and defaults
 
-//One instance per storage, built here rather than in the JSX: <RModel /> reads
+//One instance per storage, built here rather than in the JSX: <RVModel /> reads
 //each of them once, when it creates the storage, so they have to be stable
 //objects. A part belongs to the one storage it was attached to.
 

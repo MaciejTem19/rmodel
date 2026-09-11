@@ -16,7 +16,7 @@ import type { StoreKey } from './types.js'
 type SavedStore = { key: string, data: unknown }
 
 /** What every saved storage sits under, so the keys cannot collide with the app's own. */
-const BROWSER_PREFIX = 'rmodel:'
+const BROWSER_PREFIX = 'rvmodel:'
 
 /**
  * Where the storage under `key` is saved in the browser.
@@ -54,7 +54,7 @@ export function saveToBrowser<T extends object>(key: StoreKey<T>, data?: T): boo
 
     if (!value) {
         throw new Error(
-            `saveToBrowser('${key}') found no storage to save. Mount <RModel storageKey="${key}" />, `
+            `saveToBrowser('${key}') found no storage to save. Mount <RVModel storageKey="${key}" />, `
             + `create the storage with createStore('${key}', …), or hand the data in: `
             + `saveToBrowser('${key}', data).`,
         )

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { RModel, useRSelector, useRValue, useRValues } from 'rmodel'
+import { RVModel, useRSelector, useRValue, useRValues } from 'rvmodel'
 import Button from '../template/ui/Button'
 import TextInput from '../template/ui/TextInput'
 import '../template/template.css'
@@ -60,14 +60,14 @@ function MailApp() {
     useRenderLog('MailApp')
 
     return (
-        <RModel
+        <RVModel
             storageKey={MAILBOX_KEY}
             defaultValue={MAILBOX_DEFAULT}
             dataApi={mailboxApi}
             selectors={mailboxSelectors}
         >
             <Mailbox />
-        </RModel>
+        </RVModel>
     )
 }
 
@@ -276,14 +276,14 @@ function ComposerPanel() {
             </div>
 
             {open && (
-                <RModel
+                <RVModel
                     storageKey={COMPOSER_KEY}
                     defaultValue={COMPOSER_DEFAULT}
                     dataApi={composerApi}
                     remember
                 >
                     <Composer />
-                </RModel>
+                </RVModel>
             )}
         </>
     )

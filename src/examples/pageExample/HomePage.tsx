@@ -1,5 +1,5 @@
 import { useRenderLog } from "../example/useRenderLog"
-import { useRDataApi } from "rmodel"
+import { useRDataApi } from "rvmodel"
 import { APP_KEY } from "./dataModel"
 
 export function HomePage() {
