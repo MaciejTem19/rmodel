@@ -2,9 +2,9 @@
    it: a draft belongs to the window you are typing in, not to the mailbox, and
    keeping it apart means a keystroke here wakes nothing over there.
 
-   Its <RModel /> is mounted with `remember`, so closing the window keeps both
+   Its <RVModel /> is mounted with `remember`, so closing the window keeps both
    the draft and a send already on its way. */
-import { DataApi, getStore, storeKey, useRDataApi, useRKey } from 'rmodel'
+import { DataApi, getStore, storeKey, useRDataApi, useRKey } from 'rvmodel'
 import { MAILBOX_KEY } from './mailboxModel'
 import { sendMail } from './mailApi'
 

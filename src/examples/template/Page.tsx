@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { RModel } from 'rmodel'
+import { RVModel } from 'rvmodel'
 import Header from './components/Header'
 import ItemForm from './components/ItemForm'
 import ItemList from './components/ItemList'
@@ -19,7 +19,7 @@ function Page() {
   })
 
   return (
-    <RModel storageKey={PAGE_KEY} defaultValue={DEFAULT_VALUE}>
+    <RVModel storageKey={PAGE_KEY} defaultValue={DEFAULT_VALUE}>
       <main className="page">
         <PageData names={['listName', 'setListName']}>{Header}</PageData>
         <PageData names={['draft', 'setDraft', 'addItem']}>{ItemForm}</PageData>
@@ -33,7 +33,7 @@ function Page() {
           rerender={() => setRenderCount((count) => count + 1)}
         />
       </main>
-    </RModel>
+    </RVModel>
   )
 }
 

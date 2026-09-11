@@ -10,7 +10,7 @@ import { useEffect, useRef } from 'react'
  *
  * Pass the value the component read, or nothing when it reads none. Not passing
  * it and reading `undefined` are different lines: undefined is what a component
- * gets in the one pass before <RModel /> has built the storage.
+ * gets in the one pass before <RVModel /> has built the storage.
  *
  * The log sits in an effect, so a render React throws away (or repeats under
  * StrictMode) does not lie about what the user actually saw.

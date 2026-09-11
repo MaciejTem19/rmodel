@@ -6,7 +6,7 @@
     "module": "esnext",
     "types": ["vite/client"],
     "paths": {
-      "rmodel": ["./lib/main.ts"]
+      "rvmodel": ["./lib/main.ts"]
     },
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,

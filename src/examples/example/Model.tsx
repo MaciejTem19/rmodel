@@ -1,4 +1,4 @@
-import { shallowEqual, storeKey, useRDataApi, useRKey, DataApi, StoreSelectors } from 'rmodel'
+import { shallowEqual, storeKey, useRDataApi, useRKey, DataApi, StoreSelectors } from 'rvmodel'
 
 export interface ExData {
     clicked: number,
@@ -68,17 +68,17 @@ export class ExampleSelectors extends StoreSelectors<ExData> implements ExSelect
 }
 
 /**
- * One instance per storage, built here rather than in JSX: <RModel /> reads the
+ * One instance per storage, built here rather than in JSX: <RVModel /> reads the
  * props once, at creation, and a part belongs to the storage it was attached to.
  *
- *   <RModel
+ *   <RVModel
  *     storageKey={EX_KEY}
  *     defaultValue={EX_DEFAULT}
  *     dataApi={exampleApi}
  *     selectors={exampleSelectors}
  *   >
  *     <App />
- *   </RModel>
+ *   </RVModel>
  *
  * Outside React the same store comes from
  * createStore(EX_KEY, EX_DEFAULT, exampleApi, exampleSelectors).
@@ -88,7 +88,7 @@ export const exampleSelectors = new ExampleSelectors()
 
 /**
  * The key of the storage this subtree is mounted under, carrying the example's
- * types. Straight from <RModel />'s context, so a component never names the
+ * types. Straight from <RVModel />'s context, so a component never names the
  * storage it sits in — and EX_KEY stays an implementation detail of this file.
  */
 export const useExampleKey = () => useRKey<{ data: ExData, api: ExampleApi, selectors: ExampleSelectors }>()

@@ -1,4 +1,4 @@
-# rmodel — API reference
+# rvmodel — API reference
 
 Every name `lib/main.ts` exports: what it is in a sentence or two, and a
 table of what it takes and what it carries. The story is in
@@ -30,7 +30,7 @@ must touch for the holder to re-render · *stable* — how long the result stays
 the same object · *throws* — when it refuses rather than hand back nothing.
 
 `key: StoreKey<T>` accepts a plain `string` too: a key **is** a string at
-runtime, it only carries the types. A component under an `<RModel />` that has
+runtime, it only carries the types. A component under an `<RVModel />` that has
 not built its storage yet reads the value it is about to be built with, so the
 first render is never a special case.
 
@@ -77,7 +77,7 @@ The key type: `string & { [STORE_KEY]?: [T, A, S, R, E] }`. Positional where
 
 ## Component
 
-### `<RModel />`
+### `<RVModel />`
 
 Mounts a storage and provides it to the subtree; it holds no data and reads
 nothing, so it never re-renders for a write. The storage is created in a layout
@@ -90,14 +90,14 @@ effect, so it exists before the browser paints.
 | `dataApi` | `A extends DataApi<T, R, E>` | empty api | The write half, attached as the storage is built. Required when the key names an api. |
 | `selectors` | `S extends StoreSelectors<T, R>` | empty set | The read half, on the same terms. |
 | `refs` | `R extends object` | `{}` | The refs object the storage carries — the very one, not a copy. Required when the key names refs. |
-| `remember` | `boolean` | `false` | Leaves the storage in the registry when the last `<RModel />` on the key unmounts. |
-| `allowSharedStore` | `boolean` | `true` | Whether a second `<RModel />` may adopt a storage someone else holds. `false` makes that a throw. |
+| `remember` | `boolean` | `false` | Leaves the storage in the registry when the last `<RVModel />` on the key unmounts. |
+| `allowSharedStore` | `boolean` | `true` | Whether a second `<RVModel />` may adopt a storage someone else holds. `false` makes that a throw. |
 | `loadFromBrowser` | `boolean` | `false` | Builds from what was last saved under this key, falling back to `defaultValue` field by field. |
-| `saveToBrowser` | `boolean` | `false` | Saves after every write, while this `<RModel />` is mounted. |
+| `saveToBrowser` | `boolean` | `false` | Saves after every write, while this `<RVModel />` is mounted. |
 | `children` | `ReactNode` | — | The subtree that reads by this key. |
 
 A part is optional while the empty stand-in still fits what the key named, and
-required once the key narrows it. `RModelProp<T, A, S, R, E>` is this props type.
+required once the key narrows it. `RVModelProp<T, A, S, R, E>` is this props type.
 
 ---
 
@@ -155,7 +155,7 @@ reach through the ref each time.
 
 ### `useRKey<Sh>()`
 
-The key of the **nearest** `<RModel />` above, with the types you name on it.
+The key of the **nearest** `<RVModel />` above, with the types you name on it.
 Inside a page mounted under an app-wide model this is the page's key, not the
 app's.
 
@@ -164,7 +164,7 @@ app's.
 | `Sh` (type arg) | `ValidShape<Sh>` | What that storage holds. |
 | **returns** | `KeyOf<Sh>` | The key, typed. |
 
-*throws* outside `<RModel />`.
+*throws* outside `<RVModel />`.
 
 ### `useRStore<Sh>(key)`
 
@@ -252,7 +252,7 @@ The api instance the storage was built with — your own methods included.
 
 *subscribes to* the registry only: no write re-renders the holder, and the
 identity moves only when the storage is replaced · *throws* where neither a
-storage nor a pending `<RModel />` has an api under the key.
+storage nor a pending `<RVModel />` has an api under the key.
 
 ---
 
@@ -304,7 +304,7 @@ same field gets the same slot.
 
 *subscribes to* nothing · *stable* for as long as the key and the field (React
 detaches a DOM ref when that identity moves) · works before the storage exists ·
-*throws* where the key has neither a storage nor an `<RModel />` holding refs.
+*throws* where the key has neither a storage nor an `<RVModel />` holding refs.
 
 ### `useREmit(key, name)`
 
@@ -431,7 +431,7 @@ every subscriber has run; the data object is replaced, never mutated.
 
 ### `createStore(key, defaultValue, ...parts)`
 
-Builds a storage and puts it in the registry without an `<RModel />`. Called on
+Builds a storage and puts it in the registry without an `<RVModel />`. Called on
 a key that already has one, it takes the slot over and **disposes the old**.
 
 | takes | type | what it is |
@@ -468,7 +468,7 @@ being replaced under the key. Its writes throw rather than vanish.
 | name | signature | what it does |
 | --- | --- | --- |
 | `subscribeStorage` | `(key: string, listener: () => void) => () => void` | Fires when a storage is created, replaced or dropped under the key. |
-| `storeHolders` | `(key: string) => number` | How many `<RModel />` hold that storage right now. |
+| `storeHolders` | `(key: string) => number` | How many `<RVModel />` hold that storage right now. |
 | `unregisterStore` | `(key: string, store: AnyStore<T>) => void` | Drops it from the registry and disposes it; a no-op once a newer store took the slot. |
 | `extenralStorage` | `Map<string, Store<any>>` | The registry itself — an escape hatch; prefer `getStore()`. |
 
@@ -476,7 +476,7 @@ being replaced under the key. Its writes throw rather than vanish.
 
 ## Browser persistence
 
-`localStorage`, under the prefix `rmodel:`, and the key is saved with the data —
+`localStorage`, under the prefix `rvmodel:`, and the key is saved with the data —
 so a leftover from a renamed key reads as nothing saved. Nothing saves itself.
 
 | name | signature | what it does |
@@ -485,7 +485,7 @@ so a leftover from a renamed key reads as nothing saved. Nothing saves itself.
 | `keepInBrowser` | `(key: StoreKey<T>) => () => void` | Saves at once and after every write, until the returned stop is called. A key with nothing behind it saves nothing. |
 | `loadFromBrowser` | `(key: StoreKey<T>, defaultValue?: T) => T \| undefined` | What was last saved. Never saved, renamed key, older version, site data off — all read as the default. |
 | `load` | `(json: string, defaultValue?: T) => T \| undefined` | The same shaping for JSON from anywhere else. |
-| `browserKey` | `(key: string) => string` | Where it is saved: `` `rmodel:${key}` ``. |
+| `browserKey` | `(key: string) => string` | Where it is saved: `` `rvmodel:${key}` ``. |
 
 With a default value the result really is a `T`: its fields are what the result
 carries, so missing ones come from it and unknown ones are dropped.
@@ -505,7 +505,7 @@ carries, so missing ones come from it and unknown ones are dropped.
 | `StoreTask<T>` | `(signal: AbortSignal) => Promise<Partial<T> \| void>` | The body `runTask()` takes. |
 | `AnyStore<T>` | `Store<T, any, any, any, any>` | A store over `T` carrying any parts. |
 | `StoreApi<T>` | see above | What `storeApi(key)` hands back. |
-| `RModelProp<T, A, S, R, E>` | see above | The props of `<RModel />`. |
+| `RVModelProp<T, A, S, R, E>` | see above | The props of `<RVModel />`. |
 
 ---
 
@@ -527,6 +527,6 @@ Importable from their own modules, used by the library itself, and outside what
 | `useRStoreApi` | `./hooks` | What the writing hooks are built on; `storeApi(key)` is the public equivalent. |
 | `followValue` · `followValues` | `./hooks` | The ref-following behind `useRValueAsRef()`, usable without a component. |
 | `selectorNamed` | `./StoreSelectors` | The lookup `read()` and `useRSelector()` share. |
-| `claimStore` · `releaseStore` · `Claim` · `StorageListener` | `./storage` | How `<RModel />` takes and gives up a hold on a storage. |
-| `StoreKeyContext` · `StoreScope` | `./scope` | What `<RModel />` provides to the subtree. |
+| `claimStore` · `releaseStore` · `Claim` · `StorageListener` | `./storage` | How `<RVModel />` takes and gives up a hold on a storage. |
+| `StoreKeyContext` · `StoreScope` | `./scope` | What `<RVModel />` provides to the subtree. |
 | `Listener` | `./types` | `() => void`, the shape `subscribe()` takes. |

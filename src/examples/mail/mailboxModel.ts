@@ -9,7 +9,7 @@ import {
     storeKey,
     useRDataApi,
     useRKey,
-} from 'rmodel'
+} from 'rvmodel'
 import { fetchThreads, nextIncoming, saveThread, type Thread } from './mailApi'
 
 export type Folder = 'inbox' | 'unread' | 'starred' | 'sent'

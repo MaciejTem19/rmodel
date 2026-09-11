@@ -1,4 +1,4 @@
-import { DataApi, storeKey, StoreSelectors } from "rmodel"
+import { DataApi, storeKey, StoreSelectors } from "rvmodel"
 
 function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));

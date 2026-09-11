@@ -66,8 +66,8 @@ export abstract class StoreApiBridge<T extends object, R extends object = StoreR
         throw new Error(
             this.#dropped
                 ? `${this.constructor.name} was used after its storage was dropped — the `
-                  + `<RModel /> holding it unmounted, or another storage took the key. `
-                  + `<RModel remember /> keeps one alive across unmounts.`
+                  + `<RVModel /> holding it unmounted, or another storage took the key. `
+                  + `<RVModel remember /> keeps one alive across unmounts.`
                 : `${this.constructor.name} was used before its Store was built`,
         )
     }
@@ -83,7 +83,7 @@ export abstract class StoreApiBridge<T extends object, R extends object = StoreR
     }
 
     /**
-     * The refs of this part's storage — the very object <RModel refs={…} /> was
+     * The refs of this part's storage — the very object <RVModel refs={…} /> was
      * given, not a copy, and the same one useRRef() hands to the components.
      *
      * The opposite of the data in every way: written in place, listened to by

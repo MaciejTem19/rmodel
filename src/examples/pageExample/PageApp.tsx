@@ -1,4 +1,4 @@
-import { RModel, useRDataApi, useRValue } from "rmodel";
+import { RVModel, useRDataApi, useRValue } from "rvmodel";
 import { useRenderLog } from "../example/useRenderLog";
 import "./page.css";
 import { APP_API, APP_DEF, APP_KEY, MAIL_API, MAIL_DEF, MAIL_KEY, MAIL_REFS, MAIL_SELECTOR, NEWS_API, NEWS_DEF, NEWS_KEY, NEWS_REFS, NEWS_SELECTOR } from "./dataModel";
@@ -13,7 +13,7 @@ export function PageApp() {
     useRenderLog("PageApp")
 
     return (<>
-        <RModel
+        <RVModel
             storageKey={APP_KEY} 
             defaultValue={APP_DEF}
             dataApi={APP_API}
@@ -23,7 +23,7 @@ export function PageApp() {
                 <Nav />
                 {<Router />}
             </div>
-        </RModel>
+        </RVModel>
     </>)
 
 }
@@ -80,7 +80,7 @@ export function MailApp() {
 
     useRenderLog("MailApp")
 
-    return <RModel
+    return <RVModel
         storageKey={MAIL_KEY}
         defaultValue={MAIL_DEF}
         dataApi={MAIL_API}
@@ -89,7 +89,7 @@ export function MailApp() {
         remember
     >
         <MailPage />
-    </RModel>
+    </RVModel>
 
 }
 
@@ -97,7 +97,7 @@ export function NewsApp() {
 
     useRenderLog("NewsApp")
 
-    return <RModel
+    return <RVModel
         storageKey={NEWS_KEY}
         defaultValue={NEWS_DEF}
         dataApi={NEWS_API}
@@ -106,7 +106,7 @@ export function NewsApp() {
         remember
     >
         <NewsPage />
-    </RModel>
+    </RVModel>
 
 }
 

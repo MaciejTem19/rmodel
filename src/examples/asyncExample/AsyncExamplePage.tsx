@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { RModel, useRSelector, useRValue, useRValues } from 'rmodel'
+import { RVModel, useRSelector, useRValue, useRValues } from 'rvmodel'
 import Button from '../template/ui/Button'
 import Checkbox from '../template/ui/Checkbox'
 import NumberInput from '../template/ui/NumberInput'
@@ -74,7 +74,7 @@ function Board() {
     useRenderLog('Board')
 
     return (
-        <RModel
+        <RVModel
             storageKey={BOARD_KEY}
             defaultValue={BOARD_DEFAULT}
             dataApi={boardApi}
@@ -85,7 +85,7 @@ function Board() {
             <FilterBar />
             <IssueList />
             <Details />
-        </RModel>
+        </RVModel>
     )
 }
 

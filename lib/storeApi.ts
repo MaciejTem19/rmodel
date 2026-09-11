@@ -77,7 +77,7 @@ export function storeApi<T extends object>(key: StoreKey<T>): StoreApi<T> {
     return {
         key,
 
-        // Reads stay optional: a component asking before <RModel /> has built
+        // Reads stay optional: a component asking before <RVModel /> has built
         // the storage falls back to the value it is about to be built with.
         getData: () => getStore<T>(key)?.getData(),
 
@@ -165,7 +165,7 @@ function writable<T extends object>(key: StoreKey<T>) {
 
     if (!store) {
         throw new Error(
-            `storeApi('${key}') has no storage to write to. Mount <RModel storageKey="${key}" />, `
+            `storeApi('${key}') has no storage to write to. Mount <RVModel storageKey="${key}" />, `
             + `or create the storage with createStore('${key}', …) before writing to it.`,
         )
     }
