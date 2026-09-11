@@ -5,6 +5,8 @@ Zustand, but built around the state of a single page rather than of the whole
 application. It gives a page something that works like a ViewModel: one store
 per page, declared where the page starts and gone when it leaves.
 
+## Installating library
+
 ```bash
 npm install rmodel
 ```
@@ -45,14 +47,3 @@ browser persistence.
 - [docs.md](./docs.md) — the story: what it is and how to use it.
 - [api.md](./api.md) — the lookup: every exported name, signature by signature.
 
-## Development
-
-`lib/` is the published library, `src/` a demo app that imports `'rmodel'` by
-name the same way a consumer does.
-
-```bash
-npm run dev         # dev server for the demo app
-npm run build       # build the library into dist/ (ESM, CJS, .d.ts)
-npm run typecheck   # typecheck the demo app and the library
-npm run lint        # oxlint
-```
