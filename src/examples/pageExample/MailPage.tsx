@@ -1,5 +1,5 @@
 import { useRenderLog } from "../example/useRenderLog"
-import { useRDataApi, useRSelector, useRValue } from "rvmodel"
+import { useRDataApi, useRSelector, useRValue } from "../../../lib/main"
 import { APP_KEY, MAIL_KEY } from "./dataModel"
 
 /**

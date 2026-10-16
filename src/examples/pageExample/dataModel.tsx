@@ -1,4 +1,4 @@
-import { DataApi, shallowEqual, storeKey, StoreSelectors } from "rvmodel"
+import { DataApi, shallowEqual, storeKey, StoreSelectors } from "../../../lib/main"
 
 //App model
 

@@ -442,8 +442,10 @@ export function useRCustomSelector<T extends object, V, R extends object = Store
     const dependencyId = dependencies.map(String).join(' ')
 
     // useSyncExternalStore compares snapshots by identity, so an equal result
-    // has to come back as the very same value it came back as last time.
-    const cache = useRef<{ value: V } | null>(null)
+    // has to come back as the very same value it came back as last time. The
+    // inputs it was computed from are kept with it: while the selector and the
+    // values of its dependencies are the same ones, it is not run at all.
+    const cache = useRef<{ value: V, selector: Selector<T, V, R>['selector'], inputs: unknown[] } | null>(null)
 
     const subscribe = useCallback(
         (onStoreChange: Listener) => store.subscribe(onStoreChange, dependencies),
@@ -466,17 +468,40 @@ export function useRCustomSelector<T extends object, V, R extends object = Store
         // caused. A storage carries an empty object when it names none.
         const refs = (getStore(key) as AnyStore<any> | undefined)?.refs ?? pendingRefs ?? {}
 
-        const next = selector(data, refs as R)
+        const inputs = dependencies.map((name) => data[name])
         const current = cache.current
 
-        if (current && isEqual(current.value, next)) return current.value
+        // The hard stop: nothing the selector depends on moved, so whatever it
+        // would build now — a fresh object or array as often as not — would
+        // stand for the same thing. Running it anyway is what hands
+        // useSyncExternalStore a new identity on every call, and that is a
+        // render loop.
+        if (current && current.selector === selector && sameInputs(current.inputs, inputs)) {
+            return current.value
+        }
 
-        cache.current = { value: next }
+        const next = selector(data, refs as R)
 
-        return next
+        // Inputs moved but the result did not: the old value is kept, so the
+        // component does not render for nothing.
+        const value = current && isEqual(current.value, next) ? current.value : next
+
+        cache.current = { value, selector, inputs }
+
+        return value
     }
 
     return useSyncExternalStore(subscribe, getSnapshot)
+}
+
+/**
+ * Whether two lists of dependency values are the same, entry by entry.
+ * @param previous values a selector was last run with
+ * @param next values it would be run with now
+ * @returns true when every entry is the same value
+ */
+function sameInputs(previous: readonly unknown[], next: readonly unknown[]): boolean {
+    return previous.length === next.length && previous.every((value, i) => Object.is(value, next[i]))
 }
 
 /**

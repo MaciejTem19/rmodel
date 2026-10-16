@@ -1,0 +1,257 @@
+/* --- Karta --- */
+
+.card-item {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+}
+
+.card-item-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0 0 0.75rem;
+    border: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.card-item-body:hover .card-item-title {
+    color: var(--color-primary);
+}
+
+.card-item-body:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -2px;
+}
+
+.card-item-image {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+    background: var(--color-surface-muted);
+}
+
+.card-item-title {
+    padding: 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.card-item-date {
+    padding: 0 1rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.card-item-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+/* --- Przyciski --- */
+
+.card-btn {
+    padding: 0.45rem 0.9rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.card-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.card-btn:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+.card-btn-primary {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+}
+
+.card-btn-primary:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+}
+
+.card-btn-ghost {
+    border-color: var(--color-border);
+    background: transparent;
+    color: var(--color-text);
+}
+
+.card-btn-ghost:hover {
+    background: var(--color-surface-muted);
+}
+
+.card-btn-danger {
+    margin-left: auto;
+    background: transparent;
+    color: var(--danger);
+}
+
+.card-btn-danger:hover {
+    border-color: var(--danger);
+}
+
+/* --- Formularze w modalach --- */
+
+.card-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: min(28rem, 100%);
+}
+
+.card-form-heading {
+    margin: 0;
+    font-size: 1.3rem;
+    overflow-wrap: anywhere;
+}
+
+.card-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.card-form-field input,
+.card-form-field textarea {
+    padding: 0.5rem 0.65rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+    font-size: 1rem;
+}
+
+.card-form-field textarea {
+    resize: vertical;
+}
+
+.card-form-field input:focus,
+.card-form-field textarea:focus {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -1px;
+}
+
+.card-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+/* --- Szczegóły karty --- */
+
+.card-info-image {
+    width: 100%;
+    border-radius: 0.5rem;
+    background: var(--color-surface-muted);
+}
+
+.card-info-text {
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.card-info-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 1rem;
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+.card-info-meta dt {
+    color: var(--color-text-muted);
+}
+
+.card-info-meta dd {
+    margin: 0;
+}
+
+.card-muted {
+    color: var(--color-text-muted);
+}
+
+/* --- Szczegóły (osobny route) --- */
+
+.card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 40rem;
+    margin: 0 auto;
+}
+
+.card-details-back {
+    align-self: flex-start;
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.card-details-back:hover {
+    text-decoration: underline;
+}
+
+.content-page h1.card-details-title {
+    margin: 0;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.card-details-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.card-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.card-filter input,
+.card-filter select {
+    padding: 0.5rem 0.65rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+}
+
+.card-filter input {
+    flex: 1 1 12rem;
+}
+
+.card-filter input:focus,
+.card-filter select:focus {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -1px;
+}

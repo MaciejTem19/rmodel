@@ -1,0 +1,89 @@
+/* Orange palette for the route example. The raw scales are the source of truth;
+   components should use the semantic tokens below, which switch for dark mode. */
+
+:root {
+    /* Orange — main brand color */
+    --orange-50: #fff7ed;
+    --orange-100: #ffedd5;
+    --orange-200: #fed7aa;
+    --orange-300: #fdba74;
+    --orange-400: #fb923c;
+    --orange-500: #f97316;
+    --orange-600: #ea580c;
+    --orange-700: #c2410c;
+    --orange-800: #9a3412;
+    --orange-900: #7c2d12;
+    --orange-950: #431407;
+
+    /* Amber — warm neighbour, for highlights */
+    --amber-100: #fef3c7;
+    --amber-300: #fcd34d;
+    --amber-500: #f59e0b;
+    --amber-700: #b45309;
+
+    /* Teal — complementary accent, used sparingly */
+    --teal-100: #ccfbf1;
+    --teal-500: #14b8a6;
+    --teal-700: #0f766e;
+
+    /* Warm neutrals — greys with a touch of orange */
+    --stone-50: #fafaf9;
+    --stone-100: #f5f5f4;
+    --stone-200: #e7e5e4;
+    --stone-300: #d6d3d1;
+    --stone-400: #a8a29e;
+    --stone-500: #78716c;
+    --stone-600: #57534e;
+    --stone-700: #44403c;
+    --stone-800: #292524;
+    --stone-900: #1c1917;
+    --stone-950: #0c0a09;
+
+    /* Status */
+    --success: #16a34a;
+    --warning: #eab308;
+    --danger: #dc2626;
+
+    /* Semantic tokens — light */
+    --color-bg: var(--stone-50);
+    --color-surface: #ffffff;
+    --color-surface-muted: var(--orange-50);
+    --color-border: var(--stone-200);
+    --color-text: var(--stone-900);
+    --color-text-muted: var(--stone-500);
+
+    --color-primary: var(--orange-700);
+    --color-primary-hover: var(--orange-800);
+    --color-primary-soft: var(--orange-100);
+    --color-on-primary: #ffffff;
+
+    --color-accent: var(--teal-700);
+    --color-accent-hover: #115e59;
+    --color-on-accent: #ffffff;
+    --color-highlight: var(--amber-300);
+    --color-focus: var(--orange-400);
+    --color-backdrop: rgb(28 25 23 / 0.55);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-bg: var(--stone-950);
+        --color-surface: var(--stone-900);
+        --color-surface-muted: #2a1a10;
+        --color-border: var(--stone-700);
+        --color-text: var(--stone-100);
+        --color-text-muted: var(--stone-400);
+
+        --color-primary: var(--orange-500);
+        --color-primary-hover: var(--orange-400);
+        --color-primary-soft: var(--orange-950);
+        --color-on-primary: var(--stone-950);
+
+        --color-accent: var(--teal-500);
+        --color-accent-hover: #2dd4bf;
+        --color-on-accent: var(--stone-950);
+        --color-highlight: var(--amber-500);
+        --color-focus: var(--orange-300);
+        --color-backdrop: rgb(0 0 0 / 0.7);
+    }
+}

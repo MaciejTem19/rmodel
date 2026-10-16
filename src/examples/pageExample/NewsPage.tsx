@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from "react"
 import { useRenderLog } from "../example/useRenderLog"
-import { useRDataApi, useRRef, useRSelector, useRSetter, useRValue } from "rvmodel"
+import { useRDataApi, useRRef, useRSelector, useRSetter, useRValue } from "../../../lib/main"
 import { APP_KEY, NEWS_KEY } from "./dataModel"
 
 /**

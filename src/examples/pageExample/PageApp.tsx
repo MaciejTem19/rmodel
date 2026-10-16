@@ -1,4 +1,4 @@
-import { RVModel, useRDataApi, useRValue } from "rvmodel";
+import { RVModel, useRDataApi, useRValue } from "../../../lib/main";
 import { useRenderLog } from "../example/useRenderLog";
 import "./page.css";
 import { APP_API, APP_DEF, APP_KEY, MAIL_API, MAIL_DEF, MAIL_KEY, MAIL_REFS, MAIL_SELECTOR, NEWS_API, NEWS_DEF, NEWS_KEY, NEWS_REFS, NEWS_SELECTOR } from "./dataModel";

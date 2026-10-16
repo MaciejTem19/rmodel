@@ -4,6 +4,7 @@ import AsyncExamplePage from "./asyncExample/AsyncExamplePage"
 import MailApp from "./mail/MailApp"
 import { PageApp } from "./pageExample/PageApp"
 import { SecondExamplePage } from "./secondExample/SecondExample"
+import { MainPage } from "./routeExample/front/mainPage"
 
 // The template page — the same idea on the same model — is one swap away:
 // import Page from "./template/Page"
@@ -13,7 +14,7 @@ function App() {
 
   return (
   <>
-    <div className="row">
+    {/* <div className="row">
       <button onClick={() => setPage('sync')}>example</button>
       <button onClick={() => setPage('async')}>async example</button>
       <button onClick={() => setPage('second')}>second example</button>
@@ -25,7 +26,9 @@ function App() {
     {page === 'sync' && <ExamplePage />}
     {page === 'async' && <AsyncExamplePage />}
     {page === 'second' && <SecondExamplePage />}
-    {page === 'mail' && <MailApp />}
+    {page === 'mail' && <MailApp />} */}
+
+    <MainPage />
   </>)
 }
 

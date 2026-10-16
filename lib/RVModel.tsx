@@ -67,7 +67,7 @@ type PartsOf<
     S extends StoreSelectors<T, R>,
     R extends object,
     E extends object,
-> =
+> = 
     & (DataApi<T, any, any> extends A ? Partial<ApiProp<A>> : ApiProp<A>)
     & (StoreSelectors<T, any> extends S ? Partial<SelectorsProp<S>> : SelectorsProp<S>)
     & (StoreRefs extends R ? Partial<RefsProp<R>> : RefsProp<R>)
